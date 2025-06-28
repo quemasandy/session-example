@@ -288,3 +288,223 @@ Servidor → Responde confirmación → Cliente ya no tiene cookie
 ```
 
 ¡Este ejemplo te mostrará exactamente cómo funcionan las sesiones y cookies en la práctica, **incluyendo todos los detalles que normalmente están ocultos**! 🚀 
+
+## 🔍 **Monitor de Sesiones Redis**
+
+Este proyecto incluye un monitor avanzado de Redis para observar las sesiones en tiempo real. Es una herramienta muy útil para debugging y entender cómo funcionan las sesiones.
+
+### 📋 **Características del Monitor**
+
+- **📊 Visualización de sesiones**: Muestra todas las sesiones activas con sus datos
+- **⏰ TTL en tiempo real**: Ve cuánto tiempo le queda a cada sesión
+- **👁️ Monitoreo en tiempo real**: Observa operaciones de Redis en vivo
+- **🧹 Limpieza automática**: Elimina sesiones expiradas
+- **📈 Estadísticas**: Muestra métricas de uso de sesiones
+- **🎨 Interfaz colorida**: Salida con colores para mejor legibilidad
+
+### 🚀 **Cómo Usar el Monitor**
+
+#### **1. Ver todas las sesiones activas**
+```bash
+cd backend
+npm run monitor:list
+```
+
+**Salida ejemplo:**
+```
+🔍 Monitor de Sesiones Redis iniciado...
+
+📊 2 sesiones activas:
+
+🔑 sess:vCmLec24WRMXOD_Uo5hr7Au8LAb6RFKp
+⏰ TTL: 86345s
+📄 Datos:
+{
+  "cookie": {
+    "originalMaxAge": 86400000,
+    "expires": "2024-01-15T14:30:20.000Z",
+    "secure": false,
+    "httpOnly": true,
+    "path": "/"
+  },
+  "userId": "1",
+  "username": "juan",
+  "isAuthenticated": true
+}
+──────────────────────────────────────────────────
+```
+
+#### **2. Monitorear operaciones en tiempo real**
+```bash
+npm run monitor:monitor
+```
+
+**Salida ejemplo:**
+```
+👁️  Monitoreando operaciones en tiempo real...
+
+🔄 14:30:20: 1234567890.123456 [0 127.0.0.1:6379] "SET" "sess:vCmLec24WRMXOD_Uo5hr7Au8LAb6RFKp" "..."
+🔄 14:30:25: 1234567890.123457 [0 127.0.0.1:6379] "GET" "sess:vCmLec24WRMXOD_Uo5hr7Au8LAb6RFKp"
+🔄 14:30:30: 1234567890.123458 [0 127.0.0.1:6379] "DEL" "sess:vCmLec24WRMXOD_Uo5hr7Au8LAb6RFKp"
+```
+
+#### **3. Ver estadísticas de sesiones**
+```bash
+npm run monitor:stats
+```
+
+**Salida ejemplo:**
+```
+📈 Estadísticas de Sesiones:
+   Total: 3
+   Activas: 2
+   Expiradas: 1
+   TTL Promedio: 43200s
+```
+
+#### **4. Limpiar sesiones expiradas**
+```bash
+npm run monitor:clean
+```
+
+**Salida ejemplo:**
+```
+🧹 Limpiadas 1 sesiones expiradas
+```
+
+#### **5. Monitoreo continuo (cada 5 segundos)**
+```bash
+npm run monitor:watch
+```
+
+**Salida ejemplo:**
+```
+👀 Monitoreando sesiones cada 5 segundos...
+
+📊 2 sesiones activas:
+🔑 sess:abc123...
+⏰ TTL: 86340s
+...
+
+[5 segundos después...]
+
+📊 1 sesiones activas:
+🔑 sess:abc123...
+⏰ TTL: 86335s
+...
+```
+
+### 🛠️ **Comandos Disponibles**
+
+| Comando | Descripción | Ejemplo |
+|---------|-------------|---------|
+| `npm run monitor` | Muestra ayuda y comandos disponibles | `npm run monitor` |
+| `npm run monitor:list` | Lista todas las sesiones activas | `npm run monitor:list` |
+| `npm run monitor:monitor` | Monitorea operaciones en tiempo real | `npm run monitor:monitor` |
+| `npm run monitor:stats` | Muestra estadísticas de sesiones | `npm run monitor:stats` |
+| `npm run monitor:clean` | Limpia sesiones expiradas | `npm run monitor:clean` |
+| `npm run monitor:watch` | Monitoreo continuo cada 5 segundos | `npm run monitor:watch` |
+
+### 🔧 **Uso Directo del Script**
+
+También puedes usar el script directamente:
+
+```bash
+cd backend
+
+# Ver todas las sesiones
+node redis-monitor.js list
+
+# Monitorear en tiempo real
+node redis-monitor.js monitor
+
+# Ver estadísticas
+node redis-monitor.js stats
+
+# Limpiar sesiones expiradas
+node redis-monitor.js clean
+
+# Monitoreo continuo
+node redis-monitor.js watch
+```
+
+### 📊 **Qué Información Muestra**
+
+#### **Datos de Sesión**
+- **Session ID**: Identificador único de la sesión
+- **TTL**: Tiempo de vida restante en segundos
+- **Datos de usuario**: ID, username, estado de autenticación
+- **Configuración de cookie**: Expiración, seguridad, etc.
+
+#### **Estadísticas**
+- **Total de sesiones**: Número total de sesiones en Redis
+- **Sesiones activas**: Sesiones con TTL > 0
+- **Sesiones expiradas**: Sesiones con TTL <= 0
+- **TTL promedio**: Tiempo de vida promedio de las sesiones activas
+
+### 🎯 **Casos de Uso**
+
+#### **Debugging de Sesiones**
+```bash
+# Ver qué sesiones están activas
+npm run monitor:list
+
+# Monitorear cuando un usuario hace login/logout
+npm run monitor:monitor
+```
+
+#### **Mantenimiento**
+```bash
+# Limpiar sesiones expiradas
+npm run monitor:clean
+
+# Ver estadísticas de uso
+npm run monitor:stats
+```
+
+#### **Desarrollo**
+```bash
+# Monitoreo continuo durante desarrollo
+npm run monitor:watch
+```
+
+### ⚠️ **Notas Importantes**
+
+1. **Redis debe estar ejecutándose**: Asegúrate de que Redis esté corriendo con `docker compose up -d redis`
+2. **Conexión local**: El monitor se conecta a Redis en `localhost:6379`
+3. **Solo sesiones**: El monitor filtra solo las claves que empiezan con `sess:`
+4. **Permisos**: Asegúrate de que el script tenga permisos de ejecución
+
+### 🔍 **Troubleshooting**
+
+#### **Error de conexión a Redis**
+```
+❌ Error de Redis: connect ECONNREFUSED 127.0.0.1:6379
+```
+**Solución**: Ejecuta `docker compose up -d redis`
+
+#### **No se muestran sesiones**
+```
+📭 No hay sesiones activas
+```
+**Solución**: 
+1. Asegúrate de que el backend esté corriendo
+2. Haz login en la aplicación
+3. Verifica que Redis esté funcionando
+
+#### **Error de módulos ES**
+```
+SyntaxError: Cannot use import statement outside a module
+```
+**Solución**: El package.json ya tiene `"type": "module"` configurado
+
+### 🎨 **Personalización**
+
+Puedes modificar el script `backend/redis-monitor.js` para:
+
+- **Cambiar el intervalo** de monitoreo en `watch` (actualmente 5 segundos)
+- **Agregar más filtros** para otras claves de Redis
+- **Modificar el formato** de salida
+- **Agregar más estadísticas** como uso de memoria, etc.
+
+¡El monitor de Redis te ayudará a entender perfectamente cómo funcionan las sesiones en tu aplicación! 🚀 

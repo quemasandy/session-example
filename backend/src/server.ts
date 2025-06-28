@@ -1,18 +1,11 @@
 import express from 'express';
 import session from 'express-session';
-import connectRedis from 'connect-redis';
+import RedisStore from 'connect-redis';
 import { createClient } from 'redis';
 import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
-
-// 🔌 Configurar Redis
-const RedisStore = connectRedis(session);
-const redisClient = createClient({ legacyMode: true });
-redisClient.connect()
-  .then(() => logWithEmoji('📡', 'Conectado a Redis'))
-  .catch((err) => logWithEmoji('❌', 'Error conectando a Redis', { error: err.message }));
 
 // 🎨 Función para logs divertidos
 const logWithEmoji = (emoji: string, message: string, data?: any) => {
@@ -23,6 +16,12 @@ const logWithEmoji = (emoji: string, message: string, data?: any) => {
   }
   console.log(''); // Línea en blanco para separar
 };
+
+// 🔌 Configurar Redis
+const redisClient = createClient();
+redisClient.connect()
+  .then(() => logWithEmoji('📡', 'Conectado a Redis'))
+  .catch((err: any) => logWithEmoji('❌', 'Error conectando a Redis', { error: err.message }));
 
 // Configuración de middlewares
 app.use(cors({
@@ -53,11 +52,11 @@ logWithEmoji('🔧', 'Configurando middleware de sesiones...', {
 
 app.use(session({
   store: new RedisStore({ client: redisClient }),
-  secret: 'mi-super-secreto-para-firmar-cookies', // En producción usar variable de entorno
+  secret: process.env.SESSION_SECRET || 'mi-super-secreto-para-firmar-cookies', // ⚠️ En producción usar variable de entorno
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // true solo en HTTPS
+    secure: process.env.NODE_ENV === 'prd', // ⚠️ true solo en HTTPS
     httpOnly: true, // La cookie no es accesible desde JavaScript del cliente
     maxAge: 24 * 60 * 60 * 1000 // 24 horas
   }
