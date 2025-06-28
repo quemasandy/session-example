@@ -1,9 +1,18 @@
 import express from 'express';
 import session from 'express-session';
+import connectRedis from 'connect-redis';
+import { createClient } from 'redis';
 import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
+
+// 🔌 Configurar Redis
+const RedisStore = connectRedis(session);
+const redisClient = createClient({ legacyMode: true });
+redisClient.connect()
+  .then(() => logWithEmoji('📡', 'Conectado a Redis'))
+  .catch((err) => logWithEmoji('❌', 'Error conectando a Redis', { error: err.message }));
 
 // 🎨 Función para logs divertidos
 const logWithEmoji = (emoji: string, message: string, data?: any) => {
@@ -34,6 +43,7 @@ app.use(express.json());
 // 🔑 Configuración de sesiones
 logWithEmoji('🔧', 'Configurando middleware de sesiones...', {
   secret: 'mi-super-secreto-para-firmar-cookies',
+  store: 'Redis',
   cookie: {
     secure: false,
     httpOnly: true,
@@ -42,6 +52,7 @@ logWithEmoji('🔧', 'Configurando middleware de sesiones...', {
 });
 
 app.use(session({
+  store: new RedisStore({ client: redisClient }),
   secret: 'mi-super-secreto-para-firmar-cookies', // En producción usar variable de entorno
   resave: false,
   saveUninitialized: false,
