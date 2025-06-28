@@ -37,6 +37,12 @@ cd ../frontend
 npm install
 ```
 
+### 3. Levantar Redis con Docker
+
+```bash
+docker compose up -d redis
+```
+
 ## 🏃‍♂️ Cómo Ejecutar
 
 ### 1. Ejecutar el Backend
