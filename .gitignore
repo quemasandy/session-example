@@ -1,41 +1,152 @@
-# Dependencies
+# ===========================================
+# Session Management Demo - Git Ignore Rules
+# ===========================================
+
+# ===========================================
+# Dependencies and Package Managers
+# ===========================================
+
+# Node.js dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
-# Build outputs
-dist/
-build/
-*.tsbuildinfo
+# Package manager files
+jspm_packages/
+.npm
+.yarn-integrity
 
-# Environment variables
+# ===========================================
+# Environment and Configuration
+# ===========================================
+
+# Environment variables - NEVER commit these!
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.staging
 
-# IDE and editor files
-.vscode/
+# Configuration files with secrets
+config/production.json
+config/staging.json
+secrets.json
+
+# ===========================================
+# Build Outputs and Distributions
+# ===========================================
+
+# TypeScript compiled output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Frontend build outputs
+frontend/dist/
+frontend/build/
+
+# Backend compiled TypeScript
+backend/dist/
+backend/build/
+
+# Vite build outputs
+.vite/
+.parcel-cache/
+
+# Next.js build output
+.next/
+
+# Nuxt.js build output
+.nuxt/
+
+# VuePress build output
+.vuepress/dist
+
+# ===========================================
+# Development and IDE Files
+# ===========================================
+
+# VS Code settings (keep some for team consistency)
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/*.code-workspace
+.vscode-test/
+
+# JetBrains IDEs
 .idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
 *.swp
 *.swo
 *~
 
-# OS generated files
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ===========================================
+# Operating System Files
+# ===========================================
+
+# macOS
 .DS_Store
 .DS_Store?
+.AppleDouble
+.LSOverride
+Icon
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
-Thumbs.db
 
-# Logs
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===========================================
+# Logs and Temporary Files
+# ===========================================
+
+# Application logs
 logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # Runtime data
 pids/
@@ -48,63 +159,186 @@ coverage/
 *.lcov
 
 # nyc test coverage
-.nyc_output
+.nyc_output/
 
-# Dependency directories
-jspm_packages/
+# Temporary folders
+tmp/
+temp/
+.tmp/
+.local/
 
-# Optional npm cache directory
-.npm
+# ===========================================
+# Cache and Build Tools
+# ===========================================
 
-# Optional eslint cache
+# Cache directories
+.cache/
+.parcel-cache/
+
+# ESLint cache
 .eslintcache
 
-# Optional REPL history
+# Node REPL history
 .node_repl_history
 
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
-.yarn-integrity
+# ===========================================
+# Database and Storage Files
+# ===========================================
 
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
 
-# next.js build output
-.next
-
-# nuxt.js build output
-.nuxt
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
+# Redis dump files
+dump.rdb
+appendonly.aof
 
 # DynamoDB Local files
 .dynamodb/
 
+# ===========================================
+# Session and Security Related
+# ===========================================
+
+# Session storage files (if using file store)
+sessions/
+session-store/
+
+# SSL certificates and keys
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# SSH keys
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# ===========================================
+# Testing and CI/CD
+# ===========================================
+
+# Test results
+test-results/
+junit.xml
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Jest
+jest.config.local.js
+
+# ===========================================
+# Docker and Containerization
+# ===========================================
+
+# Docker volumes and data
+docker-data/
+redis-data/
+postgres-data/
+
+# Docker override files
+docker-compose.override.yml
+docker-compose.local.yml
+
+# ===========================================
+# Serverless and Cloud
+# ===========================================
+
+# Serverless directories
+.serverless/
+
+# Vercel
+.vercel
+
+# Netlify
+.netlify/
+
+# ===========================================
+# Monitoring and Analytics
+# ===========================================
+
+# Application monitoring files
+newrelic_agent.log
+.newrelic/
+
+# Sentry
+.sentryclirc
+
+# ===========================================
+# Build Tools and Bundlers
+# ===========================================
+
+# FuseBox cache
+.fusebox/
+
 # TernJS port file
 .tern-port
 
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
+# Rollup cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
 
-# Temporary folders
-tmp/
-temp/
+# ===========================================
+# Backup and Archive Files
+# ===========================================
 
-# TypeScript cache
-*.tsbuildinfo
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
 
-# Vite
-.vite/
+# Archive files
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.rar
+*.7z
 
-# Local development
-.local/ 
+# ===========================================
+# Project-Specific Ignores
+# ===========================================
+
+# Session monitoring output files
+session-reports/
+redis-snapshots/
+
+# Custom scripts output
+scripts/output/
+
+# Local development overrides
+*.local.*
+
+# ===========================================
+# Keep These Files (Negative Patterns)
+# ===========================================
+
+# Keep example environment files
+!.env.example
+!.env.template
+
+# Keep VS Code workspace settings for team consistency
+!.vscode/extensions.json
+!.vscode/settings.template.json
+
+# Keep documentation
+!docs/
+!*.md
+
+# Keep configuration templates
+!config/*.example.json
+!config/*.template.json

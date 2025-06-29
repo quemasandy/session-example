@@ -1,317 +1,195 @@
-# 🔐 Demo: Sesiones y Cookies con TypeScript
+# 🔐 Session & Cookie Management Demo
 
-Este ejemplo te mostrará exactamente cómo funcionan las sesiones y cookies en una aplicación real con TypeScript, **incluyendo todos los detalles implícitos** que normalmente no se explican.
+A comprehensive TypeScript application demonstrating **session-based authentication** with Redis storage. This project provides an educational deep-dive into how sessions and cookies work in web applications, including all the "hidden" details that are typically abstracted away.
 
-## 📁 Estructura del Proyecto
+## 🚀 Features
 
+- **Complete Session Lifecycle**: Login, authentication, logout with detailed logging
+- **Redis Session Storage**: Persistent sessions with automatic expiration
+- **Real-time Session Monitoring**: Advanced Redis monitoring tools
+- **Educational Logging**: Detailed console output explaining each step
+- **TypeScript Throughout**: Full type safety on both frontend and backend
+- **Modern Tech Stack**: Express.js, Vite, Redis with Docker
+
+## 🛠️ Technology Stack
+
+### Backend
+- **Runtime**: Node.js with TypeScript
+- **Framework**: Express.js with session middleware
+- **Session Store**: Redis with connect-redis
+- **Authentication**: Session-based with HttpOnly cookies
+- **Security**: CORS configuration for cross-origin requests
+
+### Frontend
+- **Language**: TypeScript
+- **Build Tool**: Vite for fast development
+- **Styling**: Modern CSS with gradients and animations
+- **API Client**: Fetch API with credentials for cookie management
+
+### Infrastructure
+- **Database**: Redis for session persistence
+- **Containerization**: Docker Compose for Redis
+- **Monitoring**: Custom Redis monitoring tools
+
+## 📋 Prerequisites
+
+Before running this application, ensure you have:
+
+- **Node.js** v16.0.0 or higher
+- **npm** or **yarn** package manager
+- **Docker** and **Docker Compose** for Redis
+- **Git** for version control
+
+## ⚡ Quick Start
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/session-example.git
+cd session-example
 ```
-session-example/
-├── backend/
-│   ├── src/
-│   │   └── server.ts
-│   ├── package.json
-│   └── tsconfig.json
-├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   ├── src/
-│   │   └── app.ts
-│   ├── package.json
-│   └── tsconfig.json
-└── README.md
+
+### 2. Start Redis with Docker
+```bash
+docker compose up -d redis
 ```
 
-## 🚀 Configuración Inicial
-
-### 1. Instalar dependencias del Backend
-
+### 3. Install Backend Dependencies
 ```bash
 cd backend
 npm install
 ```
 
-### 2. Instalar dependencias del Frontend
-
+### 4. Install Frontend Dependencies
 ```bash
 cd ../frontend
 npm install
 ```
 
-### 3. Levantar Redis con Docker
-
+### 5. Start the Backend Server
 ```bash
-docker compose up -d redis
-```
-
-## 🏃‍♂️ Cómo Ejecutar
-
-### 1. Ejecutar el Backend
-
-```bash
-cd backend
+cd ../backend
 npm run dev
 ```
+The backend will start at: http://localhost:3000
 
-El servidor se ejecutará en: http://localhost:3000
-
-### 2. Ejecutar el Frontend (en otra terminal)
-
+### 6. Start the Frontend Development Server
 ```bash
-cd frontend
+cd ../frontend
 npm run dev
 ```
+The frontend will start at: http://localhost:5173
 
-El frontend se ejecutará en: http://localhost:5173
+## 🧪 Testing the Application
 
-## 🧪 Cómo Probar
+### Demo Users
+The application includes three test users:
 
-1. **Abre las herramientas de desarrollador (F12)**
-2. **Ve a la pestaña Network** para ver las peticiones HTTP
-3. **Ve a la pestaña Application/Storage** para ver las cookies
-4. **Usa estos usuarios de prueba:**
+| Username | Password  | Description |
+|----------|-----------|-------------|
+| juan     | 123456    | Standard user |
+| maria    | password  | Standard user |
+| admin    | admin123  | Admin user |
 
-| Usuario | Contraseña |
-|---------|------------|
-| juan    | 123456     |
-| maria   | password   |
-| admin   | admin123   |
+### Testing Steps
 
-## 🔍 Qué Observar
+1. **Open Browser DevTools** (F12)
+   - Go to **Network** tab to see HTTP requests
+   - Go to **Application/Storage** tab to see cookies
+   - Go to **Console** tab to see detailed logs
 
-### En el Navegador:
-- **Cookie automática**: Se crea después del login
-- **Requests automáticos**: La cookie se envía en cada petición
-- **Estados de la UI**: Cambia según la autenticación
+2. **Test Authentication Flow**
+   - Try logging in with valid credentials
+   - Observe the session cookie being set
+   - Test protected routes (Profile, Secret Data)
+   - Try logging out and see cookie deletion
 
-### En la Consola del Backend:
-- **Creación de sesión**: Al hacer login
-- **Verificación automática**: En cada request protegido
-- **Destrucción de sesión**: Al hacer logout
+3. **Observe Session Details**
+   - Watch the backend console for detailed session logs
+   - Use the Redis monitor tools (see below)
+   - Notice how cookies are sent automatically
 
-### En las DevTools:
-- **Network**: Ve las cookies en los headers
-- **Application**: Ve las cookies almacenadas
-- **Console**: Ve los logs detallados
+## 🔍 What to Observe
 
-## 🎯 Puntos Clave del Ejemplo
+### In the Browser
+- **Automatic Cookie Creation**: Session cookie appears after successful login
+- **Automatic Cookie Transmission**: Cookie sent with every request
+- **UI State Changes**: Interface updates based on authentication status
+- **Network Requests**: See Set-Cookie and Cookie headers in DevTools
 
-- ✅ La cookie se crea automáticamente cuando haces login exitoso
-- ✅ Se envía automáticamente en cada request al mismo dominio
-- ✅ El servidor la verifica antes de permitir acceso a rutas protegidas
-- ✅ Se destruye cuando haces logout o expira
+### In the Backend Console
+- **Session Creation**: Detailed logs when user logs in
+- **Automatic Verification**: Session checking on each protected request
+- **Session Destruction**: Cleanup process during logout
+- **Redis Operations**: Database interactions for session storage
 
-## 🔧 Características Técnicas
+### In Redis
+- **Session Storage**: Key-value pairs with session data
+- **TTL Management**: Automatic expiration of old sessions
+- **Data Structure**: JSON serialized user information
 
-### Backend (Node.js + Express + TypeScript)
-- **Express Session**: Manejo de sesiones del lado del servidor
-- **CORS**: Configurado para permitir cookies cross-origin
-- **TypeScript**: Tipado completo para mejor desarrollo
-- **Middleware de Autenticación**: Protección de rutas
+## 🔧 API Endpoints
 
-### Frontend (HTML + CSS + TypeScript + Vite)
-- **TypeScript**: Tipado completo del lado del cliente
-- **Vite**: Servidor de desarrollo rápido
-- **Fetch API**: Con `credentials: 'include'` para cookies
-- **UI Responsive**: Diseño moderno y funcional
+### Authentication Routes
+- `POST /api/login` - Authenticate user and create session
+- `POST /api/logout` - Destroy session and clear cookie
+- `GET /api/check-session` - Check current authentication status (public)
 
-## 🍪 Configuración de Cookies
+### Protected Routes
+- `GET /api/profile` - Get user profile (requires authentication)
+- `GET /api/secret-data` - Access protected data (requires authentication)
+
+## 🍪 Session Configuration
+
+The application uses the following session settings:
 
 ```typescript
-app.use(session({
-  secret: 'mi-super-secreto-para-firmar-cookies',
+session({
+  store: new RedisStore({ client: redisClient }),
+  secret: process.env.SESSION_SECRET || 'demo-secret',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // true solo en HTTPS
-    httpOnly: true, // No accesible desde JavaScript
-    maxAge: 24 * 60 * 60 * 1000 // 24 horas
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
-}));
+})
 ```
 
-## 🔐 Rutas de la API
+### Security Features
+- **HttpOnly Cookies**: Prevents XSS attacks by making cookies inaccessible to JavaScript
+- **HTTPS in Production**: Secure flag ensures cookies only sent over HTTPS
+- **Session Signing**: Secret key prevents session tampering
+- **Redis Storage**: Sessions persist across server restarts
 
-- `POST /api/login` - Iniciar sesión
-- `GET /api/profile` - Obtener perfil (requiere auth)
-- `GET /api/secret-data` - Datos protegidos (requiere auth)
-- `GET /api/check-session` - Verificar estado de sesión
-- `POST /api/logout` - Cerrar sesión
+## 🔍 Redis Session Monitoring
 
-## 🔍 **DETALLES IMPLÍCITOS EXPLICADOS**
+This project includes advanced Redis monitoring tools to help you understand session storage:
 
-### 🍪 **¿Dónde se crea la cookie?**
+### Monitor Commands
 
-**¡Automáticamente!** Cuando modificas `req.session`:
-
-```typescript
-// Al hacer esto:
-req.session.userId = user.id;
-req.session.username = user.username;
-req.session.isAuthenticated = true;
-
-// express-session automáticamente:
-// 1. Detecta que req.session fue modificado
-// 2. Genera una cookie con el sessionID
-// 3. La incluye en la respuesta (Set-Cookie header)
-// 4. ¡No necesitas hacer nada más!
-```
-
-### 🔍 **¿De dónde viene `req.sessionID`?**
-
-**¡Automáticamente de express-session!** No lo creas tú:
-
-```typescript
-// express-session automáticamente:
-// 1. Intercepta cada request
-// 2. Lee la cookie 'connect.sid' del navegador
-// 3. Genera o recupera el sessionID
-// 4. Agrega req.sessionID al objeto request
-// 5. Agrega req.session con los datos
-
-const requireAuth = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log('SessionID:', req.sessionID); // ← Viene automáticamente
-  // ...
-};
-```
-
-### 📤 **¿Cómo se envía la cookie al navegador?**
-
-**¡Automáticamente en el header Set-Cookie!** Cuando envías la respuesta:
-
-```typescript
-res.json({ success: true, message: 'Login exitoso' });
-
-// express-session automáticamente agrega este header:
-// Set-Cookie: connect.sid=s%3Aabc123def456.xyz789; Path=/; HttpOnly; Max-Age=86400
-```
-
-### 🔄 **¿Cómo se envía la cookie en cada request?**
-
-**¡Automáticamente por el navegador!** Con `credentials: 'include'`:
-
-```typescript
-// En el frontend:
-fetch(url, {
-  credentials: 'include', // ← ¡IMPORTANTE! Para enviar cookies
-  headers: { 'Content-Type': 'application/json' }
-});
-
-// El navegador automáticamente incluye:
-// Cookie: connect.sid=s%3Aabc123def456.xyz789
-```
-
-### 🗑️ **¿Cómo se elimina la cookie?**
-
-**¡Explícitamente con `res.clearCookie()`!** En el logout:
-
-```typescript
-req.session.destroy((err) => {
-  if (!err) {
-    res.clearCookie('connect.sid'); // ← Elimina la cookie del navegador
-    res.json({ success: true, message: 'Sesión cerrada' });
-  }
-});
-```
-
-## 🎨 **LOGS DIVERTIDOS Y EXPLICATIVOS**
-
-El servidor incluye logs detallados que explican cada paso:
-
-```
-🔧 [14:30:15] Configurando middleware de sesiones...
-   📋 Detalles: {
-     "secret": "mi-super-secreto-para-firmar-cookies",
-     "cookie": {
-       "secure": false,
-       "httpOnly": true,
-       "maxAge": "24 horas"
-     }
-   }
-
-🔐 [14:30:20] 🚪 INTENTO DE LOGIN - Recibiendo credenciales...
-   📋 Detalles: {
-     "username": "juan",
-     "password": "***"
-   }
-
-🍪 [14:30:20] 🍪 SESIÓN CREADA - Datos guardados en req.session:
-   📋 Detalles: {
-     "sessionID": "abc123def456",
-     "userId": "1",
-     "username": "juan",
-     "isAuthenticated": true,
-     "note": "💡 express-session detectará estos cambios y creará la cookie automáticamente"
-   }
-
-📤 [14:30:20] 📤 ENVIANDO RESPUESTA - La cookie se incluirá automáticamente en Set-Cookie header
-```
-
-## 🚨 Notas Importantes
-
-1. **En producción**: Cambia el `secret` por una variable de entorno
-2. **HTTPS**: En producción, configura `secure: true` para las cookies
-3. **Base de datos**: Los usuarios están hardcodeados, en producción usa una BD real
-4. **Seguridad**: Este es un ejemplo educativo, implementa medidas de seguridad adicionales en producción
-
-## 🎯 **PUNTOS CLAVE A OBSERVAR**
-
-1. 🍪 **Las cookies se crean automáticamente** al modificar `req.session`
-2. 🔍 **`req.sessionID` viene automáticamente** de express-session
-3. 🔐 **El middleware `requireAuth` protege las rutas**
-4. 📤 **Las cookies se envían automáticamente** en Set-Cookie header
-5. 🗑️ **`res.clearCookie()` limpia la cookie** del navegador
-
-## 🔍 **FLUJO COMPLETO DE UNA SESIÓN**
-
-### 1. **Login Exitoso**
-```
-Cliente → POST /api/login → Servidor
-Servidor → Modifica req.session → express-session detecta cambios
-express-session → Genera cookie → Incluye en Set-Cookie header
-Servidor → Responde con cookie → Cliente almacena cookie
-```
-
-### 2. **Request Autenticado**
-```
-Cliente → Incluye cookie automáticamente → GET /api/profile
-Servidor → express-session lee cookie → Recupera sesión
-Servidor → req.sessionID disponible → Verifica autenticación
-Servidor → Responde con datos protegidos
-```
-
-### 3. **Logout**
-```
-Cliente → POST /api/logout → Servidor
-Servidor → req.session.destroy() → Destruye sesión
-Servidor → res.clearCookie() → Elimina cookie del navegador
-Servidor → Responde confirmación → Cliente ya no tiene cookie
-```
-
-¡Este ejemplo te mostrará exactamente cómo funcionan las sesiones y cookies en la práctica, **incluyendo todos los detalles que normalmente están ocultos**! 🚀 
-
-## 🔍 **Monitor de Sesiones Redis**
-
-Este proyecto incluye un monitor avanzado de Redis para observar las sesiones en tiempo real. Es una herramienta muy útil para debugging y entender cómo funcionan las sesiones.
-
-### 📋 **Características del Monitor**
-
-- **📊 Visualización de sesiones**: Muestra todas las sesiones activas con sus datos
-- **⏰ TTL en tiempo real**: Ve cuánto tiempo le queda a cada sesión
-- **👁️ Monitoreo en tiempo real**: Observa operaciones de Redis en vivo
-- **🧹 Limpieza automática**: Elimina sesiones expiradas
-- **📈 Estadísticas**: Muestra métricas de uso de sesiones
-- **🎨 Interfaz colorida**: Salida con colores para mejor legibilidad
-
-### 🚀 **Cómo Usar el Monitor**
-
-#### **1. Ver todas las sesiones activas**
 ```bash
 cd backend
+
+# List all active sessions
 npm run monitor:list
+
+# Watch Redis operations in real-time
+npm run monitor:monitor
+
+# Show session statistics
+npm run monitor:stats
+
+# Clean expired sessions
+npm run monitor:clean
+
+# Continuous monitoring (updates every 5 seconds)
+npm run monitor:watch
 ```
 
-**Salida ejemplo:**
-```
+### Monitor Output Example
+
+```bash
 🔍 Monitor de Sesiones Redis iniciado...
 
 📊 2 sesiones activas:
@@ -320,191 +198,193 @@ npm run monitor:list
 ⏰ TTL: 86345s
 📄 Datos:
 {
-  "cookie": {
-    "originalMaxAge": 86400000,
-    "expires": "2024-01-15T14:30:20.000Z",
-    "secure": false,
-    "httpOnly": true,
-    "path": "/"
+  \"cookie\": {
+    \"originalMaxAge\": 86400000,
+    \"expires\": \"2024-01-15T14:30:20.000Z\",
+    \"secure\": false,
+    \"httpOnly\": true,
+    \"path\": \"/\"
   },
-  "userId": "1",
-  "username": "juan",
-  "isAuthenticated": true
+  \"userId\": \"1\",
+  \"username\": \"juan\",
+  \"isAuthenticated\": true
 }
-──────────────────────────────────────────────────
 ```
 
-#### **2. Monitorear operaciones en tiempo real**
+## 🏗️ Project Structure
+
+```
+session-example/
+├── backend/                 # Express.js backend
+│   ├── src/
+│   │   └── server.ts       # Main server file with session logic
+│   ├── redis-monitor.js    # Redis monitoring utility
+│   ├── package.json        # Backend dependencies
+│   └── tsconfig.json       # TypeScript configuration
+├── frontend/               # Vite frontend
+│   ├── src/
+│   │   └── app.ts          # Main TypeScript application
+│   ├── index.html          # HTML entry point
+│   ├── style.css           # Application styles
+│   ├── package.json        # Frontend dependencies
+│   └── tsconfig.json       # TypeScript configuration
+├── docker-compose.yml      # Redis container configuration
+└── README.md              # This file
+```
+
+## 🔄 Session Flow Explained
+
+### 1. Login Process
+```
+Client → POST /api/login → Server
+Server → Validates credentials → Creates session data
+Server → Modifies req.session → express-session detects changes
+express-session → Generates session ID → Stores in Redis
+express-session → Creates signed cookie → Adds Set-Cookie header
+Server → Sends response → Client automatically stores cookie
+```
+
+### 2. Authenticated Request
+```
+Client → Includes cookie automatically → GET /api/profile
+Server → express-session reads cookie → Retrieves session from Redis
+Server → Populates req.session → Runs requireAuth middleware
+Middleware → Checks authentication → Allows/denies access
+Server → Returns protected data → Client receives response
+```
+
+### 3. Logout Process
+```
+Client → POST /api/logout → Server
+Server → req.session.destroy() → Removes session from Redis
+Server → res.clearCookie() → Tells browser to delete cookie
+Server → Sends confirmation → Client no longer has session
+```
+
+## 🧪 Development & Testing
+
+### Running Tests
 ```bash
-npm run monitor:monitor
-```
-
-**Salida ejemplo:**
-```
-👁️  Monitoreando operaciones en tiempo real...
-
-🔄 14:30:20: 1234567890.123456 [0 127.0.0.1:6379] "SET" "sess:vCmLec24WRMXOD_Uo5hr7Au8LAb6RFKp" "..."
-🔄 14:30:25: 1234567890.123457 [0 127.0.0.1:6379] "GET" "sess:vCmLec24WRMXOD_Uo5hr7Au8LAb6RFKp"
-🔄 14:30:30: 1234567890.123458 [0 127.0.0.1:6379] "DEL" "sess:vCmLec24WRMXOD_Uo5hr7Au8LAb6RFKp"
-```
-
-#### **3. Ver estadísticas de sesiones**
-```bash
-npm run monitor:stats
-```
-
-**Salida ejemplo:**
-```
-📈 Estadísticas de Sesiones:
-   Total: 3
-   Activas: 2
-   Expiradas: 1
-   TTL Promedio: 43200s
-```
-
-#### **4. Limpiar sesiones expiradas**
-```bash
-npm run monitor:clean
-```
-
-**Salida ejemplo:**
-```
-🧹 Limpiadas 1 sesiones expiradas
-```
-
-#### **5. Monitoreo continuo (cada 5 segundos)**
-```bash
-npm run monitor:watch
-```
-
-**Salida ejemplo:**
-```
-👀 Monitoreando sesiones cada 5 segundos...
-
-📊 2 sesiones activas:
-🔑 sess:abc123...
-⏰ TTL: 86340s
-...
-
-[5 segundos después...]
-
-📊 1 sesiones activas:
-🔑 sess:abc123...
-⏰ TTL: 86335s
-...
-```
-
-### 🛠️ **Comandos Disponibles**
-
-| Comando | Descripción | Ejemplo |
-|---------|-------------|---------|
-| `npm run monitor` | Muestra ayuda y comandos disponibles | `npm run monitor` |
-| `npm run monitor:list` | Lista todas las sesiones activas | `npm run monitor:list` |
-| `npm run monitor:monitor` | Monitorea operaciones en tiempo real | `npm run monitor:monitor` |
-| `npm run monitor:stats` | Muestra estadísticas de sesiones | `npm run monitor:stats` |
-| `npm run monitor:clean` | Limpia sesiones expiradas | `npm run monitor:clean` |
-| `npm run monitor:watch` | Monitoreo continuo cada 5 segundos | `npm run monitor:watch` |
-
-### 🔧 **Uso Directo del Script**
-
-También puedes usar el script directamente:
-
-```bash
+# Backend linting (if configured)
 cd backend
+npm run lint
 
-# Ver todas las sesiones
-node redis-monitor.js list
+# Frontend linting (if configured)
+cd frontend
+npm run lint
 
-# Monitorear en tiempo real
-node redis-monitor.js monitor
-
-# Ver estadísticas
-node redis-monitor.js stats
-
-# Limpiar sesiones expiradas
-node redis-monitor.js clean
-
-# Monitoreo continuo
-node redis-monitor.js watch
+# Build production versions
+npm run build
 ```
 
-### 📊 **Qué Información Muestra**
+### Environment Variables
 
-#### **Datos de Sesión**
-- **Session ID**: Identificador único de la sesión
-- **TTL**: Tiempo de vida restante en segundos
-- **Datos de usuario**: ID, username, estado de autenticación
-- **Configuración de cookie**: Expiración, seguridad, etc.
+Create a `.env` file in the backend directory:
+```env
+# Session configuration
+SESSION_SECRET=your-super-secret-key-here
+NODE_ENV=development
 
-#### **Estadísticas**
-- **Total de sesiones**: Número total de sesiones en Redis
-- **Sesiones activas**: Sesiones con TTL > 0
-- **Sesiones expiradas**: Sesiones con TTL <= 0
-- **TTL promedio**: Tiempo de vida promedio de las sesiones activas
+# Redis configuration (optional)
+REDIS_URL=redis://localhost:6379
 
-### 🎯 **Casos de Uso**
+# Server configuration
+PORT=3000
+```
 
-#### **Debugging de Sesiones**
+## 🚀 Deployment
+
+### Production Considerations
+
+1. **Environment Variables**
+   - Set `SESSION_SECRET` to a strong, random string
+   - Set `NODE_ENV=production` for security features
+   - Configure `REDIS_URL` for production Redis instance
+
+2. **HTTPS Configuration**
+   - Enable `secure: true` for cookies in production
+   - Use HTTPS reverse proxy (nginx, Apache)
+   - Update CORS origins to production domains
+
+3. **Redis Security**
+   - Use Redis authentication in production
+   - Configure Redis networking and firewall rules
+   - Set up Redis persistence and backups
+
+### Docker Deployment
+
 ```bash
-# Ver qué sesiones están activas
-npm run monitor:list
+# Build production images
+docker build -t session-demo-backend ./backend
+docker build -t session-demo-frontend ./frontend
 
-# Monitorear cuando un usuario hace login/logout
-npm run monitor:monitor
+# Run with docker-compose
+docker-compose up -d
 ```
 
-#### **Mantenimiento**
-```bash
-# Limpiar sesiones expiradas
-npm run monitor:clean
+## 🤝 Contributing
 
-# Ver estadísticas de uso
-npm run monitor:stats
-```
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Make your changes**
+4. **Add tests** for new functionality
+5. **Commit changes**: `git commit -m 'Add amazing feature'`
+6. **Push to branch**: `git push origin feature/amazing-feature`
+7. **Open a Pull Request**
 
-#### **Desarrollo**
-```bash
-# Monitoreo continuo durante desarrollo
-npm run monitor:watch
-```
+### Development Guidelines
 
-### ⚠️ **Notas Importantes**
+- Follow TypeScript best practices
+- Add comprehensive JSDoc comments
+- Include error handling for all async operations
+- Test session edge cases (expiration, corruption, etc.)
+- Update documentation for new features
 
-1. **Redis debe estar ejecutándose**: Asegúrate de que Redis esté corriendo con `docker compose up -d redis`
-2. **Conexión local**: El monitor se conecta a Redis en `localhost:6379`
-3. **Solo sesiones**: El monitor filtra solo las claves que empiezan con `sess:`
-4. **Permisos**: Asegúrate de que el script tenga permisos de ejecución
+## 📚 Learning Resources
 
-### 🔍 **Troubleshooting**
+This project demonstrates these key concepts:
 
-#### **Error de conexión a Redis**
-```
-❌ Error de Redis: connect ECONNREFUSED 127.0.0.1:6379
-```
-**Solución**: Ejecuta `docker compose up -d redis`
+- **Session vs Token Authentication**: When to use each approach
+- **Cookie Security**: HttpOnly, Secure, SameSite attributes
+- **Redis Session Storage**: Benefits of external session storage
+- **CORS with Credentials**: Cross-origin cookie handling
+- **Session Lifecycle**: Creation, validation, expiration, cleanup
 
-#### **No se muestran sesiones**
-```
-📭 No hay sesiones activas
-```
-**Solución**: 
-1. Asegúrate de que el backend esté corriendo
-2. Haz login en la aplicación
-3. Verifica que Redis esté funcionando
+### Recommended Reading
 
-#### **Error de módulos ES**
-```
-SyntaxError: Cannot use import statement outside a module
-```
-**Solución**: El package.json ya tiene `"type": "module"` configurado
+- [Express Session Documentation](https://github.com/expressjs/session)
+- [Redis Documentation](https://redis.io/documentation)
+- [HTTP Cookies (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
+- [CORS with Credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#requests_with_credentials)
 
-### 🎨 **Personalización**
+## ⚠️ Security Notes
 
-Puedes modificar el script `backend/redis-monitor.js` para:
+**This is an educational demo. For production use:**
 
-- **Cambiar el intervalo** de monitoreo en `watch` (actualmente 5 segundos)
-- **Agregar más filtros** para otras claves de Redis
-- **Modificar el formato** de salida
-- **Agregar más estadísticas** como uso de memoria, etc.
+1. **Hash passwords** with bcrypt or similar
+2. **Use environment variables** for all secrets
+3. **Implement rate limiting** for login attempts
+4. **Add CSRF protection** for forms
+5. **Validate and sanitize** all user inputs
+6. **Use HTTPS** in production
+7. **Implement proper logging** and monitoring
 
-¡El monitor de Redis te ayudará a entender perfectamente cómo funcionan las sesiones en tu aplicación! 🚀 
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**Your Name** - [@yourusername](https://github.com/yourusername)
+
+## 🙏 Acknowledgments
+
+- [Express.js](https://expressjs.com/) for the web framework
+- [Redis](https://redis.io/) for session storage
+- [Vite](https://vitejs.dev/) for the frontend build tool
+- [TypeScript](https://www.typescriptlang.org/) for type safety
+- The open-source community for inspiration and tools
+
+---
+
+**Made with ❤️ for learning session management concepts**

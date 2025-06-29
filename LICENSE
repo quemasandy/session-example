@@ -1,0 +1,52 @@
+MIT License
+
+Copyright (c) 2024 Session Management Demo Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+
+Additional Educational Use Notice:
+
+This software is specifically designed for educational purposes to demonstrate
+session-based authentication concepts. It includes:
+
+1. Simplified authentication for learning (not production-ready)
+2. Extensive logging and debugging features for educational value
+3. Comprehensive documentation explaining session management concepts
+4. Redis monitoring tools for understanding session storage
+
+When using this software for educational purposes:
+- The code is intentionally verbose with educational comments
+- Security implementations are simplified for clarity
+- Production hardening is not included by design
+- Focus is on demonstrating concepts rather than performance
+
+For production use, additional security measures would be required including:
+- Proper password hashing
+- Rate limiting
+- CSRF protection
+- Input validation and sanitization
+- Security headers
+- Audit logging
+- And other production security practices
+
+Educational institutions and instructors are encouraged to use this software
+for teaching web authentication concepts, with proper attribution to the
+original contributors.
